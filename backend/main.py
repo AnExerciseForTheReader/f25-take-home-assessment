@@ -2,12 +2,15 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict, Any, Optional
+from dotenv import load_dotenv
+import os
 import uvicorn
 import uuid
 import httpx
 
+load_dotenv() 
+api_key = os.getenv("API_KEY")
 app = FastAPI(title="Weather Data System", version="1.0.0")
-API_KEY = "66e1de381f4e59ca5c4568d28d5b90c6"
 
 app.add_middleware(
     CORSMiddleware,
