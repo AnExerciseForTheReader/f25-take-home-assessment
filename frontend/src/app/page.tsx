@@ -1,4 +1,5 @@
 import { WeatherForm } from "@/components/weather-form";
+import { RequestForm } from "@/components/request-form";
 
 export default function Home() {
   return (
@@ -13,35 +14,30 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-8 md:grid-cols-2 items-start">
           {/* Weather Form Section */}
-          <div className="flex flex-col items-center justify-start">
-            <h2 className="text-2xl font-semibold mb-4">
+          <div>
+            <h2 className="text-2xl font-semibold mb-4 text-center">
               Submit Weather Request
             </h2>
-            <WeatherForm />
+            <div className="flex flex-col items-stretch">
+              <WeatherForm />
+            </div>
           </div>
 
-          {/* Data Lookup Section Placeholder */}
-          <div className="flex flex-col items-center justify-start">
-            <h2 className="text-2xl font-semibold mb-4">Lookup Weather Data</h2>
-            <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8">
-              <div className="text-muted-foreground">
-                <h3 className="text-lg font-medium mb-2">
-                  TODO: Implement Data Lookup
-                </h3>
-                <p className="text-sm">
-                  This section should allow users to enter an ID and retrieve
-                  stored weather data.
-                </p>
-                <p className="text-xs mt-2 text-muted-foreground/75">
-                  Backend GET /weather/{"{id}"} endpoint is already implemented.
-                </p>
-              </div>
+          {/* Data Lookup Section */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4 text-center">
+              Lookup Weather Data
+            </h2>
+            <div className="flex flex-col items-stretch">
+              <RequestForm />
             </div>
           </div>
         </div>
+
       </div>
     </div>
+
   );
 }

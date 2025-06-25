@@ -109,6 +109,12 @@ export function WeatherForm() {
     setIsSubmitting(true);
     setResult(null);
 
+    if (!formData.location.trim()) {
+      setResult({ success: false, message: "Location is required." });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:8000/weather", {
         method: "POST",
@@ -136,10 +142,8 @@ export function WeatherForm() {
         });
       } else {
         const errorData = await response.json();
-        setResult({
-          success: false,
-          message: errorData.detail || "Failed to submit weather request",
-        });
+        const errorMessage = errorData.detail || errorData.error?.info || "Unknown error occurred.";
+        setResult({ success: false, message: errorMessage });
       }
     } catch {
       setResult({
@@ -248,14 +252,21 @@ export function WeatherForm() {
               }`}
             >
               <p className="text-sm font-medium">{result.message}</p>
-              {result.success && result.id && (
-                <p className="text-xs mt-1">
-                  Your weather request ID:{" "}
-                  <code className="bg-green-500/20 text-green-400 px-1 rounded">
-                    {result.id}
-                  </code>
-                </p>
-              )}
+                {result.success && result.id && (
+                  <>
+                    <p className="text-sm mt-1">Your weather request ID:{" "}</p>
+                    <p
+                      className="text-sm mt-1 cursor-pointer hover:underline"
+                      onClick={() => navigator.clipboard.writeText(result.id!)}
+                      title="Click to copy"
+                    >
+                      <code className="bg-green-500/20 text-green-400 px-1 rounded">
+                        {result.id}
+                      </code>
+                    </p>
+                  </>
+                )}
+
             </div>
           )}
         </form>
